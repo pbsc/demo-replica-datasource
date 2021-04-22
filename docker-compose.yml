@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mysql_master:
+    image: mysql:5.7
+    container_name: "mysql_master"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: demo_db
+    ports:
+      - "6603:3306"
+    volumes:
+      - ./master.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+    networks:
+      - overlay
+  mysql_replica:
+    image: mysql:5.7
+    container_name: "mysql_replica"
+    depends_on:
+      - mysql_master
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: demo_db
+    ports:
+      - "6604:3306"
+    volumes:
+      - ./replica.conf.cnf:/etc/mysql/conf.d/mysql.conf.cnf
+    networks:
+      - overlay
+
+networks:
+  overlay:
