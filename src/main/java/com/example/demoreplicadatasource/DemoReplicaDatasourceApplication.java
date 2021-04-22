@@ -21,8 +21,8 @@ public class DemoReplicaDatasourceApplication
 		ConfigurableApplicationContext context = SpringApplication.run(DemoReplicaDatasourceApplication.class, args);
 
 		userService = context.getBean(UserService.class);
-//		findUserByReadOnlyConnection();
-//		findUserByReadOnlyConnectionAndTransactional();
+		findUserByReadOnlyConnection();
+		findUserByReadOnlyConnectionAndTransactional();
 		findUserByTransactional();
 		updateUser();
 	}
@@ -47,8 +47,7 @@ public class DemoReplicaDatasourceApplication
 
 	static void updateUser()
 	{
-//		User user = userService.updateUserName(1L, "test1-updated-----");
-		User user = userService.findAndUpdate(1L, "test1-updated-----");
+		User user = userService.updateUserName(1L, "test1-updated-----");
 		log.info("updateUser: {}", user.toString());
 	}
 }
